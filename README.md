@@ -25,3 +25,22 @@ Run after collecting data:
 
 Requirements:
   pip install scikit-learn pandas numpy
+# PHASE 3 — ASL Live Recognition
+────────────────────────────────
+Features:
+  - MODE 1 (COUNTING): Finger counting + sum for 1 or 2 hands
+  - MODE 2 (ASL):      Real-time ASL fingerspelling using your trained classifier.
+                       Hold a gesture ~1 sec to confirm a letter.
+                       SPACE = insert space between words
+                       ENTER = finalize and display phrase
+                       C     = clear everything
+
+Controls:
+  [TAB]    - Toggle COUNTING / ASL mode
+  [SPACE]  - Add a space (new word)
+  [ENTER]  - Finalize phrase
+  [C]      - Clear
+  [Q]      - Quit
+
+Requirements:
+  pip install opencv-python mediapipe scikit-learn
