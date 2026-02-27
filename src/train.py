@@ -1,16 +1,3 @@
-"""
-PHASE 2 — ASL Classifier Trainer (v2 — engineered features)
-─────────────────────────────────────────────────────────────
-Reads asl_dataset.csv, engineers rich hand features, trains a
-GradientBoosting classifier, and saves asl_model.pkl + asl_labels.pkl.
-
-Run after collecting data:
-  python 2_train_model.py
-
-Requirements:
-  pip install scikit-learn pandas numpy
-"""
-
 import pandas as pd
 import numpy as np
 import pickle
@@ -28,7 +15,7 @@ LABELS_FILE  = "asl_labels.pkl"
 
 
 def main():
-    # Load dataset
+    # load dataset
     if not os.path.exists(DATASET_FILE):
         print(f"ERROR: {DATASET_FILE} not found. Run 1_collect_data.py first.")
         return
@@ -56,12 +43,12 @@ def main():
     X = np.array([F.from_csv_row(row) for row in raw_X])
     print(f"Feature vector size: {X.shape[1]}")
 
-    # Train/test split
+    # train/test split
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42, stratify=y
     )
 
-    # Train RandomForest first (fast)
+    # train rdmfrst #1
     print("Training RandomForest...")
     rf = RandomForestClassifier(n_estimators=300, max_depth=None,
                                 random_state=42, n_jobs=-1)
@@ -82,7 +69,7 @@ def main():
         model    = rf
         best_acc = rf_acc
 
-    # Evaluate
+    # evaluate
     y_pred = model.predict(X_test)
     print(f"\nBest model accuracy: {best_acc*100:.1f}%")
     print("\nPer-letter report:")
@@ -98,7 +85,7 @@ def main():
     else:
         print("[~] Decent. More samples for confused letters will help.")
 
-    # Show most confused pairs
+    # confused pairs
     from sklearn.metrics import confusion_matrix
     cm = confusion_matrix(y_test, y_pred, labels=labels)
     print("\nMost confused letter pairs:")
@@ -111,7 +98,7 @@ def main():
     for count, la, lb in confused[:8]:
         print(f"  {la} mistaken as {lb}: {count}x")
 
-    # Save
+    # save
     with open(MODEL_FILE,  "wb") as f: pickle.dump(model,  f)
     with open(LABELS_FILE, "wb") as f: pickle.dump(labels, f)
 
