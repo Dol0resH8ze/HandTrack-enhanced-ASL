@@ -6,6 +6,7 @@ import time
 import os
 
 # config
+MODEL_FILE     = "asl_model.pkl"
 LABELS_FILE    = "asl_labels.pkl"
 HOLD_SECONDS   = 1.0
 MIN_CONFIDENCE = 0.6
